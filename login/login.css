@@ -1,0 +1,96 @@
+body{
+    background-color: #161934;
+    margin: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Gill Sans", sans-serif;
+}
+
+
+
+
+#admin-panel{
+     background-color: #FFFFFF;
+     padding: 2rem;
+     margin: 1%;
+}
+
+
+.login{
+
+    
+    
+    text-align: center;
+    padding: 2rem;
+    margin: auto ;
+    background-color: #FFFFFF;
+    margin: 5% 10%;
+
+    width: 50%;
+    
+
+}
+
+
+
+.login h1{
+    padding: 3rem 0 1rem;
+    margin: 0%;    
+    text-align: center;
+
+}
+
+.login form{
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+.login form input, .login form p{
+    display: flex;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    padding: 1rem;
+    margin: 1%;
+}
+
+
+
+.login form button{
+    
+    margin: auto;
+    padding: 1rem;
+
+    width: 20%;
+    align-items: start;
+}
+
+.btn {
+
+  border: none; 
+  color: white; 
+  padding: 14px 28px; 
+  cursor: pointer; 
+  border-radius: 5px; 
+
+
+
+  margin-top: 4%;
+
+}
+
+
+.secondary {background-color: #e7e7e7; color: black;} 
+.secondary:hover {background: #ddd;}
+
+footer{
+    padding: 4rem;
+}

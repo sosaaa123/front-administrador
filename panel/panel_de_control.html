@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel de Control Horizon Air</title>
+  <link rel="stylesheet" href="panel.css" />
+</head>
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <h2>Administrador</h2>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#ventas">Ventas</a></li>
+        <li><a href="#usuarios">Uuarios</a></li>
+        <li><a href="#paquetes">Paquetes de viajes</a></li>
+        <li><a href="#viajes">Viajes simples</a></li>
+        <li><a href="#autos">Autos</a></li>
+        <li><a href="#excursiones">Excursiones</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+        <header id="inicio">
+            <h1>Panel de Control Horizon Air</h1>
+        </header>
+      
+
+        <section id="ventas">
+            <div class="buscarVentas contenedorBuscar">
+                <h3>Ultimas ventas</h3>
+                <input type="number" id="buscadorVentas" placeholder="Buscar venta por id." />
+                 <div class="contenedorVentas contenido">
+
+                 </div>
+            </div>
+
+        </section>
+
+        <hr>
+      <section id="usuarios">
+       
+
+        <div class="buscarClientes contenedorBuscar">
+             <h3>Usuarios</h3>
+            <input type="number" id="buscadorClientes" placeholder="Buscar cliente por id." />
+            <div class="contenedorClientes contenido">
+
+            </div>
+        </div>
+
+        <div class="eliminarClientes"></div>
+        
+      </section>
+      <hr>
+      <section id="paquetes">
+        
+        <div class="buscarPV contenedorBuscar">
+            <h3>Paquetes de viajes</h3>
+            <input type="number" id="buscadorPV" placeholder="Buscar paquete de viajes por id." />
+            <div class="contenedorPV contenido">
+
+            </div>
+        </div>
+
+        <form class="formPV formIngresar">
+            <h3>Ingresar nuevo Paquete de Viajes</h3>
+
+          
+
+            <input type="text" name="nombre" class="nombrePV" placeholder="Nombre" required>
+            <input type="number" name="precio" class="precioPV" placeholder="Precio" required>
+            <input type="text" name="origen" class="origenPV" placeholder="Origen" required>
+            <input type="text" name="destino" class="destinoPV" placeholder="Destino" required>
+            <input type="text" name="estadia" class="estadiaPV" placeholder="Estadía" required>
+
+            <select name="tipo" class="tipoPV" required>
+                <option value="nacional">Nacional</option>
+                <option value="internacional">Internacional</option>
+            </select>
+
+            <textarea name="Descripcion" class="descripcionPV" placeholder="Descripción" required></textarea>
+            <input type="number" name="Cupos" class="cuposPV" placeholder="Cupos" required>
+            <input type="text" name="Duracion" class="duracionPV" placeholder="Duración" required>
+            <input type="time" name="Hora" class="horaPV" required>
+            <input type="date" name="Fecha" class="fechaPV" required>
+
+            <select name="Estado" class="estadoPV" required>
+                <option value="Disponible">Disponible</option>
+                <option value="No disponible">No disponible</option>
+            </select>
+
+            <button type="submit">Agregar</button>
+        </form>
+        <div id="resultadoCarga"></div>
+      </section>
+      <hr>
+      <section id="viajes">
+        
+        <div class="buscarVS contenedorBuscar">
+            <h3>Viajes simples</h3>
+            <input type="number" id="buscadorVS" placeholder="Buscar viajes simples por id." />
+            <div class="contenedorVS contenido">
+
+            </div>
+        </div>
+        <form class="formVS formIngresar">
+            <h3>Ingresar nuevo viaje simple</h3>
+            <input type="number" name="codigo" class="codigoVS" placeholder="Codigo" required>
+            <input type="text" name="nombre" class="nombreVS" placeholder="Nombre" required>
+            <textarea name="descripcion" class="descripcionVS" placeholder="Descripción" required></textarea>
+            <input type="number" name="precio" class="precioVS"  placeholder="Precio" required>
+            <input type="text" name="origen" class="origenVS" placeholder="Origen" required>
+            <input type="text" name="destino" class="destinoVS" placeholder="Destino" required>
+            <input type="text" name="transporte" class="transporteVS" placeholder="Transporte" required>
+            <input type="date" name="fecha" class="fechaVS" required>
+            <input type="time" name="hora" class="horaVS" required>
+            <input type="number" name="cupos" class="cuposVS" placeholder="Cupos" required>
+            <input type="text" name="duracion_aprox" class="duracionVS" placeholder="Duración" required>
+
+            <select name="tipo_de_viaje" class="tipoVS" required>
+                <option value="Ida y uelta">Ida y vuelta</option>
+                <option value="Ida">Ida</option>
+                <option value="Vuelta">Vuelta</option>
+            </select>
+
+            <select name="estado" class="estadoVS"required>
+                <option value="Disponible">Disponible</option>
+                <option value="No disponible">No disponible</option>
+            </select>
+
+            <button type="submit">Agregar</button>
+        </form>
+      </section>
+
+      <hr>
+      <section id="autos">
+        
+        <div class="buscarAuto contenedorBuscar">
+            <h3>Autos</h3>
+            <input type="number" id="buscadorAuto" placeholder="Buscar viajes autos por id." />
+            <div class="contenedorAuto contenido">
+
+            </div>
+        </div>
+
+
+        <form class="formAuto formIngresar">
+            <h3>Ingresar nuevo auto</h3>
+            <input type="text" name="modelo" class="modeloAuto" placeholder="Modelo" required>
+            <input type="number" name="precio por dia" class="precioAuto" placeholder="Precio por dia" required>
+            <input type="number" name="Disponibles" class="disponiblesAuto" placeholder="Disponibles" required>
+            <button type="submit">Agregar</button>
+        </form>
+
+
+
+      </section>
+      <hr>
+      <section id="excursiones">
+        
+        <div class="buscarExc contenedorBuscar">
+            <h3>Excursiones</h3>
+            <input type="number" id="buscadorExc" placeholder="Buscar excursiones por id." />
+            <div class="contenedorExc contenido">
+
+            </div>
+        </div>
+
+        <form class="formExc formIngresar">
+            <h3>Ingresar nueva excursion</h3>
+            <input type="text" name="Nombre" class="nombreExcursion" placeholder="Nombre" required>
+            <input type="text" name="Inicio" class="inicioExcursion" placeholder="Inicio" required>
+            <input type="text" name="Final" class="finalExcursion" placeholder="Final" required>
+            <textarea name="Descripcion" class="descripcionExcursion" placeholder="Descripción" required></textarea>
+            <input type="text" name="Lugar" class="lugarExcursion" placeholder="Lugar" required>
+
+            <button type="submit">Agregar</button>
+        </form>
+
+      </section>
+
+    </main>
+  </div>
+  <script src="panel.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #3B74DA;
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+}
+
+
+
+header{
+    padding: 0%;
+    margin: 0%;
+}
+
+
+section, header{
+    margin-bottom: 60px;
+    scroll-margin-top: 50px
+}
+
+
+.container {
+  display: flex;
+  width: 100%;
+  margin: 2%;
+  background-color: #fff;
+  
+  
+}
+
+
+.sidebar {
+  width: 200px;
+  background-color: #3B74DA;
+  color: white;
+
+  height: 100vh;
+  position: fixed;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-bottom: 4rem;
+  margin-top: 6rem;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0%;
+}
+
+.sidebar ul li {
+  padding: 1rem 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}
+
+
+.main-content {
+  margin-left: 240px;
+  padding: 30px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+main h1 {
+  margin-bottom: 5rem;
+}
+
+section {
+  margin-bottom: 60px;
+}
+
+section h2 {
+  padding: 1rem;
+}
+
+
+
+.contenedorBuscar {
+  background-color: whitesmoke;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  height: 20rem;
+  overflow-y: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+  margin-top: 4rem;
+}
+
+.contenedorBuscar input {
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+.contenido {
+  flex: 1;
+  overflow-y: auto;
+}
+
+
+
+
+
+
+.info {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  
+}
+
+.info p {
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+
+.formIngresar {
+  background-color: whitesmoke;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 90%;
+  margin: auto;
+  display: grid;
+  gap: 1rem;
+
+  margin: auto;
+  margin-top: 4rem;
+}
+
+input, textarea, select, button {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  background-color:#bbb;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: whitesmoke;
+}
+
+#resultadoCarga {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
