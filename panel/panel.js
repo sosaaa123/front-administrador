@@ -7,7 +7,7 @@ const urlVS = "https://backend-carrito-filb.vercel.app/viajes/obtener"
 ////const urlExc = "https://backend-carrito-filb.vercel.app/excursiones/obtener" EXCURSIONES TODAVIA NO ESTA SUBIDA
 
 
-const urlPVenviar = "https://backend-carrito-filb.vercel.app/viajes/ingresar"
+const vsEliminar = "https://backend-carrito-filb.vercel.app/viajes/eliminar"
 
 const inputVentas = document.getElementById("buscadorVentas")
 const contenedorVentas = document.querySelector(".contenedorVentas")
@@ -78,6 +78,114 @@ document.addEventListener("DOMContentLoaded", async () => {
     ///const excursiones = data6.flat()
     //console.log(excursiones)
 
+  function borrarRegistro(url, dicID){
+  if(confirm(`Desea eliminar el registro con id ${Object.values(dicID)[0]}?`)){
+      fetch(url,{
+
+        method: 'POST',
+        body: JSON.stringify(dicID),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then( data =>  {
+
+        console.log(data)
+        alert(data.mensaje || JSON.stringify(data))
+        
+
+    })
+    .catch(error => {
+
+      console.error("Ha ocurrido un error:", error)
+      alert(error)
+
+    })
+  
+
+  }
+
+  
+
+
+}
+
+
+    function verExc(dicId, url, cont){
+
+      fetch(url,{
+
+        method: 'POST',
+        body: JSON.stringify(dicId),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then( data =>  {
+        ////Si no tiene excursiones me devuelve []
+        cont.innerHTML = ""
+        cont.innerHTML = `
+          <h4 class="excursionesh3">Excursiones</h4>
+        `
+        console.log(data)
+        alert(data.mensaje || JSON.stringify(data))
+        excursiones = data.flat()
+        
+        if (data.length > 0){
+            console.log("Tiene excursiones")
+           
+
+            excursiones.forEach(i =>{
+              const divexc = document.createElement("div")
+              divexc.innerHTML = `
+              
+              <p  class="p_excursion">Excursion id:  ${i["Excursion id"]}</p>
+              <p  class="p_excursion">Nombre:  ${i["Nombre"]}</p>
+              <p class="p_excursion">Descripcion:  ${i["Descripcion"]}</p>
+              <p  class="p_excursion">Lugar:  ${i["Lugar"]}</p>
+              <p  class="p_excursion">Inicio:  ${i["Inicio"]}</p>
+              <p  class="p_excursion">Final:  ${i["Final"]}</p>
+              
+              
+              `
+
+              cont.appendChild(divexc)
+
+
+            })
+        }
+
+        else {
+
+          const divexc = document.createElement("div")
+          divexc.innerHTML = `
+          
+          <p class="p_excursiones">No hay excursiones para este registro</p>
+          
+          `
+
+        
+          cont.appendChild(divexc)
+
+        }
+        
+
+    })
+    .catch(error => {
+
+      console.error("Ha ocurrido un error:", error)
+      alert(error)
+
+    })
+
+    }
+
+
+    function vincularExc(){
+      const vent = window.open("agregarExc/agregarEx.html", "excursiones", "width=700,height=600,top=100,left=200,resizable=yes,scrollbars=yes")
+    }
 
     function mostrarVentas(ventas) {
       contenedorVentas.innerHTML = ""
@@ -96,12 +204,20 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Código de viaje: ${i["Codigo de viaje"]}</p>
           <p>Tipo: ${i["Tipo"]}</p>
           <p>Precio: $${i["Precio"]}</p>
+          
         `
+        const btnEliminar = document.createElement("button")
+        btnEliminar.classList.add("eliminarVenta", "eliminar")
+        btnEliminar.textContent = "Eliminar registro"
 
+        
+
+        
         contenedorVentas.appendChild(div)
       })
     }
 
+    
 
     function mostrarClientes(clientes){
       contenedorClientes.innerHTML = ""
@@ -116,9 +232,21 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Apellido: ${i["Apellido"]}</p>
           <p>Contraseña: ${i["Contraseña"]}</p>
           <p>Email: ${i["Email"]}</p>
-
+          
         `
+        const btnEliminar = document.createElement("button")
+        btnEliminar.classList.add("eliminarCliente", "eliminar")
+        btnEliminar.textContent = "Eliminar registro"
+
+        btnEliminar.dataset.id = i["Usuario id"] ///le creo un data id y le meto el id de su respectivo registro.
+        btnEliminar.addEventListener("click", ()=>{
+          const id = parseInt(btnEliminar.dataset.id) ///ver si esto trae el  valor realmente
+          const dicId = {"uc_id":id}
+          borrarRegistro("https://backend-carrito-filb.vercel.app/clientes/eliminar", dicId)
+          
+        })
       
+        div.appendChild(btnEliminar)
         contenedorClientes.appendChild(div)
 
 
@@ -150,9 +278,61 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Fecha: ${i["Fecha"]}</p>
           <p>Hora: ${i["Hora"]}</p>
           <p>Estado: ${i["Estado"]}</p>
-
+          
         `
+        
+        const verExcursiones = document.createElement("button")
+        verExcursiones.classList.add("verExcursiones")
+        verExcursiones.textContent = "Ver excursiones"
+        
+        verExcursiones.dataset.id = i["Codigo"]
+
+        const excursionesDiv = document.createElement("div")
+        
+        div.appendChild(excursionesDiv)
+
+
+      ////////////////  ACA ESTO Y TRABAJANDO ///////
+
+        const agregarExc = document.createElement("button")
+        agregarExc.classList.add("agregarExc")
+        agregarExc.textContent = "Agregar excursion"
+        agregarExc.dataset.id = i["Codigo"]
+
+        div.appendChild(agregarExc)
+
+
+        agregarExc.addEventListener("click", ()=>{
+          vincularExc()
+        })
+        
+        
+        const btnEliminar = document.createElement("button")
+        btnEliminar.classList.add("eliminarPV", "eliminar")
+        btnEliminar.textContent = "Eliminar registro"
+
+        btnEliminar.dataset.id = i["Codigo"] ///le creo un data id y le meto el id de su respectivo registro.
+
+        verExcursiones.addEventListener("click", ()=>{
+          const id = parseInt(verExcursiones.dataset.id)
+          const dicId = {"pv_id": id}  
+          excursionesDiv.classList.add("excursionesDiv")
+          exc = verExc(dicId, "https://backend-carrito-filb.vercel.app/excursiones/obtenerPV", excursionesDiv)
+
+          
+
+        })
+
+        btnEliminar.addEventListener("click", ()=>{
+          const id = parseInt(btnEliminar.dataset.id )
+          const dicId = {"codigoDeViaje": id}
+
+          borrarRegistro("https://backend-carrito-filb.vercel.app/paqueteDeViajes/eliminar", dicId)
+          
+        })
       
+        div.appendChild(verExcursiones)
+        div.appendChild(btnEliminar)
         contenedorPV.appendChild(div)
 
 
@@ -184,9 +364,23 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Duracion: ${i["Duracion"]}</p>
           <p>Tipo de viaje: ${i["Tipo_de_viaje"]}</p>          
           <p>Estado: ${i["Estado"]}</p>
+          
 
         `
+        const btnEliminar = document.createElement("button")
+        btnEliminar.classList.add("eliminarVS", "eliminar")
+        btnEliminar.textContent = "Eliminar registro"
+
+        btnEliminar.dataset.id = i["Codigo"] 
+        btnEliminar.addEventListener("click", ()=>{
+          const id = parseInt(btnEliminar.dataset.id )
+          const dicId = {"vs_id": id}
+          
+          borrarRegistro("https://backend-carrito-filb.vercel.app/viajes/eliminar", dicId)
+          
+        })
       
+        div.appendChild(btnEliminar)
         contenedorVS.appendChild(div)
 
 
@@ -208,10 +402,24 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Disponibles: ${i["disponibles"]}</p>
           <p>Contraseña: ${i["contraseña"]}</p>
           <p>Precio por dia: $${i["precio por dia"]}</p>
-
+          
         `
       
+        const btnEliminar = document.createElement("button")
+        btnEliminar.classList.add("eliminarAuto", "eliminar")
+        btnEliminar.textContent = "Eliminar registro"
+
+        btnEliminar.dataset.id = i["auto id"] 
+        btnEliminar.addEventListener("click", ()=>{
+          const id = parseInt(btnEliminar.dataset.id )
+          const dicId = {"auto_id": id}
+          borrarRegistro("https://backend-carrito-filb.vercel.app/autos/eliminar", dicId)
+          
+        })
+      
+        div.appendChild(btnEliminar)
         contenedorAuto.appendChild(div)
+        
 
 
       })
@@ -234,10 +442,24 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Final: ${i["Final"]}</p>
           <p>Descripcion: ${i["Descripcion"]}</p>
           <p>Lugar: ${i["Lugar"]}</p>
+          
 
         `
       
-        contenedorAuto.appendChild(div)
+        const btnEliminar = document.createElement("button")
+        btnEliminar.classList.add("eliminarExc", "eliminar")
+        btnEliminar.textContent = "Eliminar registro"
+
+        btnEliminar.dataset.id = i["Excursion id"] 
+        btnEliminar.addEventListener("click", ()=>{
+          const id = parseInt(btnEliminar.dataset.id )
+          dicId = {"excursion_id":id}
+          borrarRegistro("https://backend-carrito-filb.vercel.app/excursiones/eliminar", dicId)
+          
+        })
+      
+        div.appendChild(btnEliminar)
+        contenedorExc.appendChild(div)
 
 
       })
@@ -250,11 +472,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     mostrarVentas(ventas)
+    
     mostrarClientes(clientes)
+  
     mostrarPVs(PVs)
+    
     mostrarVSs(VSs)
+    
     ///mostrarAutos(autos)
+    
     ///mostrarExcursiones(excursiones)
+    
 
   function buscador(input, datos, funcion_mostrar, clave_valor_id) {
   input.addEventListener("input", () => {
@@ -284,8 +512,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   })
 
 
-  
-  
+
 
 
 
@@ -302,34 +529,84 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-  formularioVS.addEventListener("submit", function(event) {
-  event.preventDefault()
-  const formData = new FormData(formularioVS)
 
-  fetch("https://backend-carrito-filb.vercel.app/viajes/ingresar", {
-    method: 'POST',
-    body: JSON.stringify(Object.fromEntries(formData)),
-    headers: {
-      'Content-Type': 'application/json'
+function enviarForm(dic, url) {
+   fetch(url, {
+
+      method: 'POST',
+      body: JSON.stringify(dic),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+
+    })
+    .then(response => {
+      if (response.ok) {
+
+        alert(response)
+        console.log(response.json())
+         
+      } else {
+
+        console.error("horror:", response.status)
+        
+
+      }
+    })
+    .then(data => {
+      if (data) {
+        console.log("resp:", data);
+
+      }
+    })
+    .catch(error => {
+      console.error("error:", error)
+
+    })
+}
+
+
+formularioPV.addEventListener("submit", function(event) {
+    event.preventDefault()
+
+    const fecha = new Date()
+    fecha =   dayjs().format('DD/MM/YYYY');
+
+    const dicPV = {
+    nombre: formularioPV.querySelector(".nombrePV").value,
+    precio: parseFloat(formularioPV.querySelector(".precioPV").value),
+    origen: formularioPV.querySelector(".origenPV").value,
+    destino: formularioPV.querySelector(".destinoPV").value,
+    estadia: formularioPV.querySelector(".estadiaPV").value,
+    tipo: formularioPV.querySelector(".tipoPV").value,
+
+    descripcion: formularioPV.querySelector(".descripcionPV").value,
+    cupos: parseInt(formularioPV.querySelector(".cuposPV").value),
+
+    duracion: formularioPV.querySelector(".duracionPV").value,
+    tipo_de_viaje: formularioPV.querySelector(".tipoPVn").value,
+    hora: formularioPV.querySelector(".horaPV").value,
+    fecha: dayjs(formularioPV.querySelector(".fechaPV").value).format('DD/MM/YYYY'), ////yankis de mierda
+
+    
+
     }
-  })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      console.error("error:", response.status);
-      return null
-    }
-  })
-  .then(data => {
-    if (data) {
-      console.log("Respuesta:", data);
-    }
-  })
-  .catch(error => {
-    console.error("error:", error);
-  })
+  
+
+    enviarForm(dicPV, "https://backend-carrito-filb.vercel.app/paqueteDeViajes/ingresar")
+
 })
+
+
+
+///enviarForm(formularioVS,"https://backend-carrito-filb.vercel.app/viajes/ingresar")
+///enviarForm(formularioPV, "https://backend-carrito-filb.vercel.app/paqueteDeViajes/ingresar")
+///enviarForm(formularioAutos, "https://backend-carrito-filb.vercel.app/autos/ingresar")
+///enviarForm(formularioExcursion, "https://backend-carrito-filb.vercel.app/excursiones/ingresar")
+
+
+
+
 
 
 

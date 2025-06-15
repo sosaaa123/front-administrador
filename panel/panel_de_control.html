@@ -76,28 +76,25 @@
             <input type="text" name="estadia" class="estadiaPV" placeholder="Estadía" required>
 
             <select name="tipo" class="tipoPV" required>
-                <option value="Ida y uelta">Ida y vuelta</option>
-                <option value="Ida">Ida</option>
-                <option value="Vuelta">Vuelta</option>
+                <option value="ida y vuelta">Ida y vuelta</option>
+                <option value="ida">Solo ida</option>
+                
             </select>
             
 
-            <textarea name="Descripcion" class="descripcionPV" placeholder="Descripción" required></textarea>
-            <input type="number" name="Cupos" class="cuposPV" placeholder="Cupos" required>
-
-            <select name="tipo_de_viaje" class="tipoPV" required>
+            <textarea name="descripcion" class="descripcionPV" placeholder="Descripción" required></textarea>
+            <input type="number" name="cupos" class="cuposPV" placeholder="Cupos" required>
+            <input type="text" name="duracion" class="duracionPV" placeholder="Duración" required>
+            <select name="tipo_de_viaje" class="tipoPVn" required>
                 <option value="nacional">Nacional</option>
                 <option value="internacional">Internacional</option>
             </select>
 
-            <input type="text" name="Duracion" class="duracionPV" placeholder="Duración" required>
-            <input type="time" name="Hora" class="horaPV" required>
-            <input type="date" name="Fecha" class="fechaPV" required>
+            
+            <input type="time" name="hora" class="horaPV" required>
+            <input type="date" name="fecha" class="fechaPV" required>
 
-            <select name="Estado" class="estadoPV" required>
-                <option value="Disponible">Disponible</option>
-                <option value="No disponible">No disponible</option>
-            </select>
+            
 
             <button type="submit">Agregar</button>
         </form>
@@ -133,11 +130,6 @@
                 <option value="Vuelta">Vuelta</option>
             </select>
 
-            <select name="estado" class="estadoVS"required>
-                <option value="Disponible">Disponible</option>
-                <option value="No disponible">No disponible</option>
-            </select>
-
             <button type="submit">Agregar</button>
         </form>
       </section>
@@ -153,12 +145,14 @@
             </div>
         </div>
 
+      
 
         <form class="formAuto formIngresar">
             <h3>Ingresar nuevo auto</h3>
             <input type="text" name="modelo" class="modeloAuto" placeholder="Modelo" required>
-            <input type="number" name="precio por dia" class="precioAuto" placeholder="Precio por dia" required>
-            <input type="number" name="Disponibles" class="disponiblesAuto" placeholder="Disponibles" required>
+            <input type="number" name="Disponibles" class="disponiblesAuto" placeholder="disponibles" required>
+            <input type="number" name="precio por dia" class="precioAuto" placeholder="precio_por_dia" required>
+          
             <button type="submit">Agregar</button>
         </form>
 
@@ -178,11 +172,11 @@
 
         <form class="formExc formIngresar">
             <h3>Ingresar nueva excursion</h3>
-            <input type="text" name="Nombre" class="nombreExcursion" placeholder="Nombre" required>
-            <input type="text" name="Inicio" class="inicioExcursion" placeholder="Inicio" required>
-            <input type="text" name="Final" class="finalExcursion" placeholder="Final" required>
-            <textarea name="Descripcion" class="descripcionExcursion" placeholder="Descripción" required></textarea>
-            <input type="text" name="Lugar" class="lugarExcursion" placeholder="Lugar" required>
+            <input type="text" name="nombre" class="nombreExcursion" placeholder="Nombre" required>
+            <input type="time" name="inicio" class="inicioExc" required>
+            <input type="time" name="final" class="finalExc" required>
+            <textarea name="descripcion" class="descripcionExcursion" placeholder="Descripción" required></textarea>
+            <input type="text" name="lugar" class="lugarExcursion" placeholder="Lugar" required>
 
             <button type="submit">Agregar</button>
         </form>
