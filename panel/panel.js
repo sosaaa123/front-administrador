@@ -540,28 +540,15 @@ function enviarForm(dic, url) {
       }
 
     })
-    .then(response => {
-      if (response.ok) {
-
-        alert(response)
-        console.log(response.json())
-         
-      } else {
-
-        console.error("horror:", response.status)
-        
-
-      }
-    })
+    .then(response => response.json())
     .then(data => {
-      if (data) {
-        console.log("resp:", data);
+          alert(data.Mensaje)
+          location.reload()
 
-      }
     })
-    .catch(error => {
-      console.error("error:", error)
 
+    .catch(error => {
+      console.error("Horror:", error)
     })
 }
 
@@ -569,8 +556,7 @@ function enviarForm(dic, url) {
 formularioPV.addEventListener("submit", function(event) {
     event.preventDefault()
 
-    const fecha = new Date()
-    fecha =   dayjs().format('DD/MM/YYYY');
+    
 
     const dicPV = {
     nombre: formularioPV.querySelector(".nombrePV").value,
@@ -586,16 +572,44 @@ formularioPV.addEventListener("submit", function(event) {
     duracion: formularioPV.querySelector(".duracionPV").value,
     tipo_de_viaje: formularioPV.querySelector(".tipoPVn").value,
     hora: formularioPV.querySelector(".horaPV").value,
-    fecha: dayjs(formularioPV.querySelector(".fechaPV").value).format('DD/MM/YYYY'), ////yankis de mierda
+    fecha: dayjs(formularioPV.querySelector(".fechaPV").value).format('DD/MM/YY') ////yankis de mierda
 
     
 
     }
   
-
+    console.log(dayjs(formularioPV.querySelector(".fechaPV").value).format('DD/MM/YY'))
     enviarForm(dicPV, "https://backend-carrito-filb.vercel.app/paqueteDeViajes/ingresar")
 
 })
+
+formularioVS.addEventListener("submit", function(event) {
+    event.preventDefault()
+    dicVS = {
+
+      nombre: formularioVS.querySelector(".nombreVS").value,
+      descripcion: formularioVS.querySelector(".descripcionVS").value,
+      precio: parseFloat(formularioVS.querySelector(".precioVS").value),
+      origen: formularioVS.querySelector(".origenVS").value,
+      destino: formularioVS.querySelector(".destinoVS").value,
+      transporte: formularioVS.querySelector(".transporteVS").value,
+      fecha: dayjs(formularioVS.querySelector(".fechaVS").value).format('DD/MM/YY'),
+      hora: formularioVS.querySelector(".horaVS").value,
+      cupos: parseInt(formularioVS.querySelector(".cuposVS").value),
+      duracion_aprox: formularioVS.querySelector(".duracionVS").value,
+      tipo_de_viaje: formularioVS.querySelector(".tipoVS").value,
+
+
+
+
+
+    }
+
+
+    console.log(dayjs(formularioVS.querySelector(".fechaVS").value).format('DD/MM/YY'))
+    enviarForm(dicVS, "https://backend-carrito-filb.vercel.app/viajes/ingresar")
+
+  })
 
 
 
