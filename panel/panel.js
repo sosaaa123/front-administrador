@@ -302,36 +302,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-  formularioVS.addEventListener("submit", function(event){
-    event.preventDefault()
-    const formData = new FormData(formularioVS)
-    
-    fetch("https://backend-carrito-filb.vercel.app/viajes/ingresar",{
-      method: 'POST',
-      body: JSON.stringify(Object.fromEntries(formData)),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+  formularioVS.addEventListener("submit", function(event) {
+  event.preventDefault()
+  const formData = new FormData(formularioVS)
 
+  fetch("https://backend-carrito-filb.vercel.app/viajes/ingresar", {
+    method: 'POST',
+    body: JSON.stringify(Object.fromEntries(formData)),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        console.error("error:", response.status);
-        return null;
-      }
-    })
-    .then(data => {
-      if (data) {
-        console.log("Respuesta:", data)
-      }
-    })
-    .catch(error => {
-      console.error("error:", error)
-    })
-  
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error("error:", response.status);
+      return null
+    }
+  })
+  .then(data => {
+    if (data) {
+      console.log("Respuesta:", data);
+    }
+  })
+  .catch(error => {
+    console.error("error:", error);
+  })
+})
+
 
 
   } catch (error) {

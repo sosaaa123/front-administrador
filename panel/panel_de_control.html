@@ -76,12 +76,20 @@
             <input type="text" name="estadia" class="estadiaPV" placeholder="Estadía" required>
 
             <select name="tipo" class="tipoPV" required>
+                <option value="Ida y uelta">Ida y vuelta</option>
+                <option value="Ida">Ida</option>
+                <option value="Vuelta">Vuelta</option>
+            </select>
+            
+
+            <textarea name="Descripcion" class="descripcionPV" placeholder="Descripción" required></textarea>
+            <input type="number" name="Cupos" class="cuposPV" placeholder="Cupos" required>
+
+            <select name="tipo_de_viaje" class="tipoPV" required>
                 <option value="nacional">Nacional</option>
                 <option value="internacional">Internacional</option>
             </select>
 
-            <textarea name="Descripcion" class="descripcionPV" placeholder="Descripción" required></textarea>
-            <input type="number" name="Cupos" class="cuposPV" placeholder="Cupos" required>
             <input type="text" name="Duracion" class="duracionPV" placeholder="Duración" required>
             <input type="time" name="Hora" class="horaPV" required>
             <input type="date" name="Fecha" class="fechaPV" required>
