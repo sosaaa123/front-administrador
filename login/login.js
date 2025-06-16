@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const url = "https://backend-carrito-filb.vercel.app/clientes/validarContraseñaAdmin"
+  const url = "https://backend-carrito-filb.vercel.app/clientes/validarContrase%C3%B1aAdmin"
   const loginForm = document.getElementById("login-form")
   const userInput = document.getElementById("user")
   const passwordInput = document.getElementById("password")
