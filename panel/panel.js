@@ -112,8 +112,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     .then(response => response.json())
     .then( data =>  {
 
-        console.log(data)
-        alert(data.mensaje || JSON.stringify(data))
+      if (data.error || (data.detail && data.detail.includes('violates foreign key constraint'))) {
+          alert("no se puede eliminar el registro porque tiene una relacion importante con otro registro.")
+
+      } else {
+        alert("Registro eliminado exitosamente.");
+      }
         
 
     })
