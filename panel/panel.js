@@ -1,3 +1,5 @@
+
+
 const urlVentas = "https://backend-carrito-filb.vercel.app/ventas/obtener"
 const urlClientes = "https://backend-carrito-filb.vercel.app/clientes/obtener"
 const urlPV = "https://backend-carrito-filb.vercel.app/paqueteDeViajes/obtener"
@@ -7,24 +9,12 @@ const urlVS = "https://backend-carrito-filb.vercel.app/viajes/obtener"
 ////const urlExc = "https://backend-carrito-filb.vercel.app/excursiones/obtener" EXCURSIONES TODAVIA NO ESTA SUBIDA
 
 
-const excursionesPrueba = [
-  {
-    "Excursion id": 1,
-    "Nombre": "Excursion A",
-    "Inicio": "09:00",
-    "Final": "13:00",
-    "Descripcion": "Descripcion A",
-    "Lugar": "Lugar A"
-  },
-  {
-    "Excursion id": 2,
-    "Nombre": "Excursion B",
-    "Inicio": "14:00",
-    "Final": "18:00",
-    "Descripcion": "Descripcion B",
-    "Lugar": "Lugar B"
-  }
-]
+////Pedir url autos(obtener, vincular a PV, vincular a VS), url para ver relacion pv-auto vs-auto
+////Pedir url excursiones(obtener, vincular a PV)
+////Pedir url eliminar relacion excursion-pv
+
+///Hacer funcion para verificar administrador en el login de la bd
+///Hacer funcion para ver ventas relacionadas a cada cliente
 
 
 
@@ -146,9 +136,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         headers: {
           'Content-Type': 'application/json'
         }
-    })
-    .then(response => response.json())
-    .then( data =>  {
+      })
+      .then(response => response.json())
+      .then( data =>  {
         ////Si no tiene excursiones me devuelve []
         cont.innerHTML = ""
         cont.innerHTML = `
@@ -208,6 +198,77 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+    function verAutos(dicId, url, cont){
+      fetch(url,{
+
+        method: 'POST',
+        body: JSON.stringify(dicId),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then( data =>  {
+        ////Si no tiene autos me devuelve []
+        cont.innerHTML = ""
+        cont.innerHTML = `
+          <h4 class="autosh4">Autos</h4>
+        `
+        console.log(data)
+        ///alert(data.mensaje || JSON.stringify(data))
+        autos = data.flat()
+        
+        if (data.length > 0){
+            console.log("Tiene autos")
+           
+
+            autos.forEach(i =>{
+              const divexc = document.createElement("div")
+              divexc.innerHTML = `
+              
+                  <p>Auto id: ${i["auto id"]}</p>
+                  <p>Modelo: ${i["modelo"]}</p>
+                  <p>Disponibles: ${i["disponibles"]}</p>
+                  <p>Contraseña: ${i["contraseña"]}</p>
+                  <p>Precio por dia: $${i["precio por dia"]}</p>
+              
+              
+              
+              `
+
+              cont.appendChild(divexc)
+
+
+            })
+        }
+
+        else {
+
+          const divexc = document.createElement("div")
+          divexc.innerHTML = `
+          
+          <p class="p_excursiones">No hay autos para este registro</p>
+          
+          `
+
+        
+          cont.appendChild(divexc)
+
+        }
+        
+
+    })
+    .catch(error => {
+
+      console.error("Ha ocurrido un error:", error)
+      alert(error)
+
+    })
+
+    }
+
+
+
     vent = document.querySelector(".ventanAgregar")
     function vincularExc(id, excursiones, vent){
      console.log("hola")
@@ -261,6 +322,80 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.log(data)
                 ///alert(data.mensaje || JSON.stringify(data))
                 alert("Excursion agregada")
+
+          })
+          .catch(error => {
+
+                console.error("Ha ocurrido un error:", error)
+        
+
+          })
+
+        })
+        
+
+        div.appendChild(agregar)
+        vent.appendChild(div)
+
+
+      })
+
+
+
+    }
+
+
+    function vincularAuto(id, autos, vent){
+     console.log("hola")
+     vent.innerHTML = ""
+     vent.style.display = "block"
+     x = document.createElement("button")
+     x.textContent = "X"
+     x.classList.add("ventanaCerrar")
+     vent.appendChild(x)
+    x.addEventListener("click", ()=>{
+      vent.style.display = "none"
+    })
+
+    autos.forEach(i =>{
+        const div = document.createElement("div")
+        div.classList.add("info")
+
+        div.innerHTML = 
+        `
+          <p>Auto id: ${i["auto id"]}</p>
+          <p>Modelo: ${i["modelo"]}</p>
+          <p>Disponibles: ${i["disponibles"]}</p>
+          <p>Contraseña: ${i["contraseña"]}</p>
+          <p>Precio por dia: $${i["precio por dia"]}</p>
+          
+
+        `
+        const agregar = document.createElement("button")
+        agregar.textContent = "agregar"
+        agregar.dataset.id = i["auto id"]
+
+        agregar.addEventListener("click", () =>{
+          excId = parseInt(agregar.dataset.id)
+          const dicVinc = {
+            "pv_id": id,
+            "at_id":excId
+          }
+
+          fetch("https://backend-carrito-filb.vercel.app/auto/ingresarVinculoPV",{ /////URL QUE NO ESTA TODAVIA
+
+                method: 'POST',
+                body: JSON.stringify(dicVinc),
+                headers: {
+                'Content-Type': 'application/json'
+              }
+          })
+          .then(response => response.json())
+          .then( data =>  {
+
+                console.log(data)
+                ///alert(data.mensaje || JSON.stringify(data))
+                alert("auto agregado")
 
           })
           .catch(error => {
@@ -390,6 +525,42 @@ document.addEventListener("DOMContentLoaded", async () => {
         div.appendChild(excursionesDiv)
 
 
+        const verAutosPVbtn = document.createElement("button")
+        verAutosPVbtn.innerText = "Ver Autos"
+        verAutosPVbtn.classList.add("verAutosPV")
+        verAutosPVbtn.dataset.id = i["Codigo"]
+        const autosDiv = document.createElement("div")
+        div.appendChild(verAutosPVbtn)
+        div.appendChild(autosDiv)
+        
+        verAutosPVbtn.addEventListener("click", ()=>{
+          id = parseInt(verAutosPVbtn.dataset.id)
+          dicId = {
+
+            "pv_id": id
+          
+          }
+
+          ////TODAVIA NO ESTA verAutos(dicId, "https://backend-carrito-filb.vercel.app/autos/verAutosPV",autosDiv)
+        })
+
+
+        ////ESTOY ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////
+
+        const agregarAutosPVbtn = document.createElement("button")
+        agregarAutosPVbtn.textContent = "Agregar auto"
+        agregarAutosPVbtn.classList.add("agregarAutobtn")
+        agregarAutosPVbtn.dataset.id = i["Codigo"]
+        div.appendChild(verAutosPVbtn)
+
+        agregarAutosPVbtn.addEventListener("click", () =>{
+          id = parseInt(agregarAutosPVbtn.dataset.id)
+          vincularAuto(id, ventas, vent) ////VENTAS ESTA DE PRUEBA ACA IRIA AUTOS
+
+
+        })
+
+
       ////////////////  ACA ESTOY TRABAJANDO ///////
 
         const agregarExc = document.createElement("button")
@@ -398,7 +569,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         agregarExc.dataset.id = i["Codigo"]
         
         agregarExc.addEventListener("click", ()=>{
-          id = parseInt(agregarExc.dataset.id)
+          const id = parseInt(agregarExc.dataset.id)
           vincularExc(id, ventas, vent)
           console.log("hola")
         })
@@ -429,7 +600,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
 
        
-      
+        div.appendChild(agregarAutosPVbtn)
         div.appendChild(agregarExc)
         div.appendChild(verExcursiones)
         div.appendChild(btnEliminar)
@@ -644,6 +815,7 @@ function enviarForm(dic, url) {
     .then(data => {
           alert(data.Mensaje)
           location.reload()
+          console.log(data.Mensaje)
 
     })
 
@@ -714,11 +886,33 @@ formularioVS.addEventListener("submit", function(event) {
   })
 
 
+  formularioAutos.addEventListener("submit", function(event){
+    event.preventDefault()
+    dicAutos = {
+      "modelo": document.querySelector(".modeloAuto").value,
+      "disponibles": parseInt(document.querySelector(".disponiblesAuto").value),
+      "precio_por_dia": parseFloat(document.querySelector(".precioAuto").value)
+    }
 
-///enviarForm(formularioVS,"https://backend-carrito-filb.vercel.app/viajes/ingresar")
-///enviarForm(formularioPV, "https://backend-carrito-filb.vercel.app/paqueteDeViajes/ingresar")
-///enviarForm(formularioAutos, "https://backend-carrito-filb.vercel.app/autos/ingresar")
-///enviarForm(formularioExcursion, "https://backend-carrito-filb.vercel.app/excursiones/ingresar")
+    enviarForm(dicAutos,"https://backend-carrito-filb.vercel.app/autos/ingresar")
+  })
+
+
+
+  formularioExcursion.addEventListener("submit", function(event){
+    event.preventDefault()
+    dicExc = {
+
+      "nombre": document.querySelector(".nombreExc").value,
+      "inicio": document.querySelector(".inicioExc").value,
+      "final": document.querySelector(".finalExc").value,
+      "descripcion": document.querySelector(".descripcionExc").value,
+      "lugar": document.querySelector(".lugarExc").value
+    }
+
+    console.log(dicExc)
+    enviarForm(dicExc,"https://backend-carrito-filb.vercel.app/excursiones/ingresar")
+  })
 
 
 

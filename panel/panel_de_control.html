@@ -102,7 +102,7 @@
       </section>
       <hr>
       <section id="viajes">
-        
+        <div class="ventanAgregarvs"></div>
         <div class="buscarVS contenedorBuscar">
             <h3>Viajes simples</h3>
             <input type="number" id="buscadorVS" placeholder="Buscar viajes simples por id." />
@@ -149,8 +149,8 @@
         <form class="formAuto formIngresar">
             <h3>Ingresar nuevo auto</h3>
             <input type="text" name="modelo" class="modeloAuto" placeholder="Modelo" required>
-            <input type="number" name="Disponibles" class="disponiblesAuto" placeholder="disponibles" required>
-            <input type="number" name="precio por dia" class="precioAuto" placeholder="precio_por_dia" required>
+            <input type="number" name="disponibles" class="disponiblesAuto" placeholder="Disponibles" required>
+            <input type="number" name="precio_por_dia" class="precioAuto" placeholder="Precio por dia" required>
           
             <button type="submit">Agregar</button>
         </form>
@@ -169,13 +169,14 @@
             </div>
         </div>
 
+        
         <form class="formExc formIngresar">
             <h3>Ingresar nueva excursion</h3>
-            <input type="text" name="nombre" class="nombreExcursion" placeholder="Nombre" required>
+            <input type="text" name="nombre" class="nombreExc" placeholder="Nombre" required>
             <input type="time" name="inicio" class="inicioExc" required>
             <input type="time" name="final" class="finalExc" required>
-            <textarea name="descripcion" class="descripcionExcursion" placeholder="Descripción" required></textarea>
-            <input type="text" name="lugar" class="lugarExcursion" placeholder="Lugar" required>
+            <textarea name="descripcion" class="descripcionExc" placeholder="Descripción" required></textarea>
+            <input type="text" name="lugar" class="lugarExc" placeholder="Lugar" required>
 
             <button type="submit">Agregar</button>
         </form>
