@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const url = ""
+  const url = "https://backend-carrito-filb.vercel.app/clientes/validarContraseñaAdmin"
   const loginForm = document.getElementById("login-form")
   const userInput = document.getElementById("user")
   const passwordInput = document.getElementById("password")
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           sessionStorage.setItem("logueado", "true")
           window.location.href = "../panel/panel_de_control.html"
-          
+
       } else {
         alert("Credenciales incorrectas")
       }
