@@ -19,7 +19,7 @@ const urlVS = "https://backend-carrito-filb.vercel.app/viajes/obtener"
 
 
 const vsEliminar = "https://backend-carrito-filb.vercel.app/viajes/eliminar"
-
+const v = "?"
 const inputVentas = document.getElementById("buscadorVentas")
 const contenedorVentas = document.querySelector(".contenedorVentas")
 
