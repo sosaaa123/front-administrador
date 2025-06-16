@@ -47,9 +47,9 @@ const resultado = document.getElementById("resultadoCarga")
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  ///if (sessionStorage.getItem("logueado") !== "true") {
-    ///window.location.href = "login.html"
-  ///}
+  if (sessionStorage.getItem("logueado") !== "true") {
+    window.location.href = "login.html"
+  }
 
   try {
     const res1 = await fetch(urlVentas)
@@ -101,10 +101,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
     .then(response => response.json())
     .then( data =>  {
-
-      if (data.error ||  data.detail.includes('violates foreign key constraint')) {
-          alert("no se puede eliminar el registro porque tiene una relacion importante con otro registro.")
-
+      console.log(data)
+      if (data.error ||  (data.detail && data.detail.includes('violates foreign key constraint'))) {
+          console.log(data)
+          alert("no se puede eliminar el registro porque tiene una relacion importante con otro registro, consultar demas tablas.")
+        
       } else {
         alert("Registro eliminado exitosamente.");
       }
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .catch(error => {
 
       console.error("Ha ocurrido un error:", error)
-      alert(error)
+      alert("no se puede eliminar el registro porque tiene una relacion importante, consultar demas tablas.")
 
     })
   
@@ -496,7 +497,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function mostrarVentas(ventas) {
       contenedorVentas.innerHTML = ""
-      ventas = ventas.reverse()
       ventas.forEach(i => {
         const div = document.createElement("div")
         div.classList.add("info")
@@ -514,10 +514,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Precio: $${i["Precio"]}</p>
           
         `
-        const btnEliminar = document.createElement("button")
-        btnEliminar.classList.add("eliminarVenta", "eliminar")
-        btnEliminar.textContent = "Eliminar registro"
-
+        
         
 
         
@@ -529,7 +526,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function mostrarClientes(clientes){
       contenedorClientes.innerHTML = ""
-      clientes = clientes.reverse()
       clientes.forEach(i =>{
         const div = document.createElement("div")
         div.classList.add("info")
@@ -574,19 +570,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
        
 
-        const btnEliminar = document.createElement("button")
-        btnEliminar.classList.add("eliminarCliente", "eliminar")
-        btnEliminar.textContent = "Eliminar registro"
-
-        btnEliminar.dataset.id = i["Usuario id"] ///le creo un data id y le meto el id de su respectivo registro.
-        btnEliminar.addEventListener("click", ()=>{
-          const id = parseInt(btnEliminar.dataset.id) ///ver si esto trae el  valor realmente
-          const dicId = {"uc_id":id}
-          borrarRegistro("https://backend-carrito-filb.vercel.app/clientes/eliminar", dicId)
-          
-        })
-      
-        div.appendChild(btnEliminar)
+        
         contenedorClientes.appendChild(div)
 
 
@@ -598,7 +582,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     function mostrarPVs(PVs){
-      PVs = PVs.reverse()
       contenedorPV.innerHTML = ""
       PVs.forEach(i =>{
         const div = document.createElement("div")
@@ -733,7 +716,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function mostrarVSs(VSs){
       contenedorVS.innerHTML = ""
-      VSs = VSs.reverse()
       VSs.forEach(i =>{
         const div = document.createElement("div")
         div.classList.add("info")
@@ -826,7 +808,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function mostrarAutos(autos){
-      autos = autos.reverse()
       contenedorAuto.innerHTML = ""
       autos.forEach(i =>{
         const div = document.createElement("div")
@@ -866,9 +847,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     function mostrarExcursiones(excursiones){
-      
       contenedorExc.innerHTML = ""
-      excursiones = excursiones.reverse()
       excursiones.forEach(i =>{
         const div = document.createElement("div")
         div.classList.add("info")

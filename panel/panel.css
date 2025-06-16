@@ -2,12 +2,19 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #3B74DA;
-  font-family: Arial, sans-serif;
+  background-color: 	#DCDCDC;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   height: 100vh;
 }
 
+
+p{
+  color: 	#6D6D6D;
+}
+.main-content h1, .main-content h2, h3{
+  	color:	#1F1F1F
+}
 
 
 header{
@@ -22,11 +29,16 @@ section, header{
 }
 
 
+h1{
+  text-align: center;
+}
+
 .container {
   display: flex;
   width: 100%;
   margin: 2%;
-  background-color: #fff;
+  margin-top: 4%;
+  background-color:white;
   
   
 }
@@ -34,8 +46,8 @@ section, header{
 
 .sidebar {
   width: 200px;
-  background-color: #3B74DA;
-  color: white;
+  background-color: 	#DCDCDC;
+  color: black;
 
   height: 100vh;
   position: fixed;
@@ -44,7 +56,8 @@ section, header{
 
 .sidebar h2 {
   margin-bottom: 4rem;
-  margin-top: 6rem;
+  margin-top: 2rem;
+  
 }
 
 .sidebar ul {
@@ -57,7 +70,7 @@ section, header{
 }
 
 .sidebar ul li a {
-  color: white;
+  color: black;
   text-decoration: none;
   transition: 0.2s;
 }
@@ -89,12 +102,13 @@ section h2 {
 
 
 .contenedorBuscar {
-  background-color: whitesmoke;
+  background-color: #FFFAFA;
   padding: 1rem;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  height: 20rem;
+
+  height: 28rem;
   overflow-y: auto;
+  overflow-x: hidden;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
@@ -108,7 +122,7 @@ section h2 {
   padding: 8px;
   font-size: 14px;
   border: 1px solid #bbb;
-  border-radius: 4px;
+  
 }
 
 .contenido {
@@ -127,6 +141,7 @@ section h2 {
   padding: 10px;
   margin-bottom: 10px;
   background-color: white;
+
   
 }
 
@@ -137,11 +152,11 @@ section h2 {
 
 
 .formIngresar {
-  background-color: whitesmoke;
+  background-color: #FFFAFA;
   padding: 1rem;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  width: 80%;
+  
+  width: 70%;
   margin: auto;
   display: grid;
   gap: 1rem;
@@ -160,13 +175,14 @@ input, textarea, select, .formIngresar button {
 }
 
 .formIngresar button {
-  background-color:#bbb;
+  background-color:#1F1F1F;
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .formIngresar button:hover {
-  background-color: whitesmoke;
+  background-color: #bbb;
 }
 
 #resultadoCarga {
@@ -252,5 +268,19 @@ input, textarea, select, .formIngresar button {
   line-height: 30px;
   text-align: center;
 
+}
+
+
+button{
+  background-color: #DCDCDC;
+  color:black;
+  border: none;
+
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 1% 0;
+  margin-bottom: 0%;
+  padding: 0.4rem;
+  border-radius: 3px;
 }
 
