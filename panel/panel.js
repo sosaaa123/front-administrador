@@ -5,8 +5,8 @@ const urlClientes = "https://backend-carrito-filb.vercel.app/clientes/obtener"
 const urlPV = "https://backend-carrito-filb.vercel.app/paqueteDeViajes/obtener"
 const urlVS = "https://backend-carrito-filb.vercel.app/viajes/obtener"
 
-///const urlAutos = "https://backend-carrito-filb.vercel.app/autos/obtener" AUTOS TODAVIA NO ESTA SUBIDA
-////const urlExc = "https://backend-carrito-filb.vercel.app/excursiones/obtener" EXCURSIONES TODAVIA NO ESTA SUBIDA
+const urlAutos = "https://backend-carrito-filb.vercel.app/autos/obtener" 
+const urlExc = "https://backend-carrito-filb.vercel.app/excursiones/obtener" 
 
 
 ////Pedir url autos(obtener, vincular a PV, vincular a VS), url para ver relacion pv-auto vs-auto
@@ -65,11 +65,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res4 = await fetch(urlVS)
     const data4 = await res4.json()
 
-    ///const res5= await fetch(urlAutos)
-    ///const data5 = await res5.json() 
+    const res5= await fetch(urlAutos)
+    const data5 = await res5.json() 
 
-    ///const res6 = await fetch(urlExc)
-    //const data6 = await res6.json()
+    const res6 = await fetch(urlExc)
+    const data6 = await res6.json()
 
     const ventas = data1.flat() ///Para sacar los diccionarios de la lista en la que estan y ahorrarme recorrerlos
     console.log(ventas)
@@ -83,11 +83,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const VSs = data4.flat()
     console.log(VSs)
 
-    ///const autos = data5.flat()
-    ///console.log(autos)
+    const autosJSON = data5.flat()
+    console.log(autosJSON)
 
-    ///const excursiones = data6.flat()
-    //console.log(excursiones)
+    const excursionesJSON = data6.flat()
+    console.log(excursiones)
 
   function borrarRegistro(url, dicID){
   if(confirm(`Desea eliminar el registro con id ${Object.values(dicID)[0]}?`)){
@@ -211,26 +211,27 @@ document.addEventListener("DOMContentLoaded", async () => {
       .then( data =>  {
         ////Si no tiene autos me devuelve []
         cont.innerHTML = ""
-        cont.innerHTML = `
-          <h4 class="autosh4">Autos</h4>
-        `
+       
         console.log(data)
         ///alert(data.mensaje || JSON.stringify(data))
-        autos = data.flat()
+        const autos = data.flat()
         
         if (data.length > 0){
             console.log("Tiene autos")
-           
+             cont.innerHTML = `
+              <h4 class="autosh4">Autos</h4>
+              `
 
             autos.forEach(i =>{
               const divexc = document.createElement("div")
+  
               divexc.innerHTML = `
               
-                  <p>Auto id: ${i["auto id"]}</p>
-                  <p>Modelo: ${i["modelo"]}</p>
-                  <p>Disponibles: ${i["disponibles"]}</p>
-                  <p>Contraseña: ${i["contraseña"]}</p>
-                  <p>Precio por dia: $${i["precio por dia"]}</p>
+                  <p class="p_excursion" >Auto id: ${i["auto id"]}</p>
+                  <p class="p_excursion" >Modelo: ${i["modelo"]}</p>
+                  <p class="p_excursion" >Disponibles: ${i["disponibles"]}</p>
+                  <p class="p_excursion" >Contraseña: ${i["contraseña"]}</p>
+                  <p class="p_excursion" >Precio por dia: $${i["precio por dia"]}</p>
               
               
               
@@ -322,6 +323,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.log(data)
                 ///alert(data.mensaje || JSON.stringify(data))
                 alert("Excursion agregada")
+                location.reload
 
           })
           .catch(error => {
@@ -418,7 +420,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   
 
 
-    function vincularAuto(id, autos, vent){
+    function vincularAuto(dicVinc, autos, vent, url){
      console.log("hola")
      vent.innerHTML = ""
      vent.style.display = "block"
@@ -449,13 +451,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         agregar.dataset.id = i["auto id"]
 
         agregar.addEventListener("click", () =>{
-          excId = parseInt(agregar.dataset.id)
-          const dicVinc = {
-            "pv_id": id,
-            "at_id":excId
-          }
+          atid = parseInt(agregar.dataset.id)
+          dicVinc.at_id = atid
+          
 
-          fetch("https://backend-carrito-filb.vercel.app/auto/ingresarVinculoPV",{ /////URL QUE NO ESTA TODAVIA
+          fetch(url,{ /////URL QUE NO ESTA TODAVIA
 
                 method: 'POST',
                 body: JSON.stringify(dicVinc),
@@ -469,6 +469,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.log(data)
                 ///alert(data.mensaje || JSON.stringify(data))
                 alert("auto agregado")
+                ///location.reload()
 
           })
           .catch(error => {
@@ -495,6 +496,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function mostrarVentas(ventas) {
       contenedorVentas.innerHTML = ""
+      ventas = ventas.reverse()
       ventas.forEach(i => {
         const div = document.createElement("div")
         div.classList.add("info")
@@ -527,6 +529,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function mostrarClientes(clientes){
       contenedorClientes.innerHTML = ""
+      clientes = clientes.reverse()
       clientes.forEach(i =>{
         const div = document.createElement("div")
         div.classList.add("info")
@@ -595,6 +598,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     function mostrarPVs(PVs){
+      PVs = PVs.reverse()
       contenedorPV.innerHTML = ""
       PVs.forEach(i =>{
         const div = document.createElement("div")
@@ -634,6 +638,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         verAutosPVbtn.classList.add("verAutosPV")
         verAutosPVbtn.dataset.id = i["Codigo"]
         const autosDiv = document.createElement("div")
+        autosDiv.classList.add("excursionesDiv")
+        autosDiv.style.display = "none"
         div.appendChild(verAutosPVbtn)
         div.appendChild(autosDiv)
         
@@ -645,7 +651,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           
           }
 
-          ////TODAVIA NO ESTA verAutos(dicId, "https://backend-carrito-filb.vercel.app/autos/verAutosPV",autosDiv)
+          autosDiv.style.display = "block"
+
+          verAutos(dicId, "https://backend-carrito-filb.vercel.app/autos/obtenerPV",autosDiv)
         })
 
 
@@ -655,11 +663,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         agregarAutosPVbtn.textContent = "Agregar auto"
         agregarAutosPVbtn.classList.add("agregarAutobtn")
         agregarAutosPVbtn.dataset.id = i["Codigo"]
-        div.appendChild(verAutosPVbtn)
+        div.appendChild(agregarAutosPVbtn)
 
         agregarAutosPVbtn.addEventListener("click", () =>{
           id = parseInt(agregarAutosPVbtn.dataset.id)
-          vincularAuto(id, ventas, vent) ////VENTAS ESTA DE PRUEBA ACA IRIA AUTOS
+          dicId = {
+             "pv_id": id,
+             "at_id": 0
+          }
+
+          vincularAuto(dicId, autosJSON, vent, "https://backend-carrito-filb.vercel.app/autos/ingresarVinculoPV") 
 
 
         })
@@ -674,7 +687,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         agregarExc.addEventListener("click", ()=>{
           const id = parseInt(agregarExc.dataset.id)
-          vincularExc(id, ventas, vent)
+          vincularExc(id, excursionesJSON, vent, "https://backend-carrito-filb.vercel.app/auto/ingresarVinculoPV")
           console.log("hola")
         })
 
@@ -704,7 +717,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
 
        
-        div.appendChild(agregarAutosPVbtn)
+        
         div.appendChild(agregarExc)
         
         div.appendChild(btnEliminar)
@@ -720,6 +733,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function mostrarVSs(VSs){
       contenedorVS.innerHTML = ""
+      VSs = VSs.reverse()
       VSs.forEach(i =>{
         const div = document.createElement("div")
         div.classList.add("info")
@@ -754,6 +768,53 @@ document.addEventListener("DOMContentLoaded", async () => {
           borrarRegistro("https://backend-carrito-filb.vercel.app/viajes/eliminar", dicId)
           
         })
+
+
+        const verAutosVSbtn = document.createElement("button")
+        verAutosVSbtn.innerText = "Ver Autos"
+        verAutosVSbtn.classList.add("verAutosPV")
+        verAutosVSbtn.dataset.id = i["Codigo"]
+        const autosDiv = document.createElement("div")
+        autosDiv.classList.add("excursionesDiv")
+        autosDiv.style.display = "none"
+        div.appendChild(verAutosVSbtn)
+        div.appendChild(autosDiv)
+        
+        verAutosVSbtn.addEventListener("click", ()=>{
+          id = parseInt(verAutosVSbtn.dataset.id)
+          dicId = {
+
+            "vs_id": id
+          
+          }
+
+          autosDiv.style.display = "block"
+
+          verAutos(dicId, "https://backend-carrito-filb.vercel.app/autos/obtenerVS",autosDiv)
+        })
+
+
+        ////ESTOY ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////
+
+        const agregarAutosVSbtn = document.createElement("button")
+        agregarAutosVSbtn.textContent = "Agregar auto"
+        agregarAutosVSbtn.classList.add("agregarAutobtn")
+        agregarAutosVSbtn.dataset.id = i["Codigo"]
+        div.appendChild(agregarAutosVSbtn)
+
+        agregarAutosVSbtn.addEventListener("click", () =>{
+          id = parseInt(agregarAutosVSbtn.dataset.id)
+          dicId = {
+            "vs_id": id,
+            "at_id": 0
+          }
+          vincularAuto(dicId, autosJSON, vent, "https://backend-carrito-filb.vercel.app/autos/ingresarVinculoVS" ) 
+
+
+        })
+
+
+
       
         div.appendChild(btnEliminar)
         contenedorVS.appendChild(div)
@@ -765,6 +826,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function mostrarAutos(autos){
+      autos = autos.reverse()
       contenedorAuto.innerHTML = ""
       autos.forEach(i =>{
         const div = document.createElement("div")
@@ -804,7 +866,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     function mostrarExcursiones(excursiones){
+      
       contenedorExc.innerHTML = ""
+      excursiones = excursiones.reverse()
       excursiones.forEach(i =>{
         const div = document.createElement("div")
         div.classList.add("info")
@@ -854,9 +918,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     mostrarVSs(VSs)
     
-    ///mostrarAutos(autos)
+    mostrarAutos(autosJSON)
     
-    ///mostrarExcursiones(excursiones)
+    mostrarExcursiones(excursionesJSON)
     
 
   function buscador(input, datos, funcion_mostrar, clave_valor_id) {
