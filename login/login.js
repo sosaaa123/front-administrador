@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const url = "https://backend-carrito-filb.vercel.app/clientes/validarContrase%C3%B1aAdmin"
+  const url = "https://backend-carrito-filb.vercel.app/clientes/validarContrasenaAdmin"
   const loginForm = document.getElementById("login-form")
   const userInput = document.getElementById("user")
   const passwordInput = document.getElementById("password")
 
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault() ////Para que no se recargeçue
-
+    console.log("Intentando enviar login...")
     const user = userInput.value
     const password = passwordInput.value
 
@@ -30,11 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(data => {
         if (data === true) {
 
+          console.log(data)
+
           sessionStorage.setItem("logueado", "true")
           window.location.href = "../panel/panel_de_control.html"
 
       } else {
         alert("Credenciales incorrectas")
+        console.log(data)
       }
     })
     .catch(error => {
