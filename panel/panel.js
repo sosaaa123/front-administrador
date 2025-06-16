@@ -19,7 +19,7 @@ const urlVS = "https://backend-carrito-filb.vercel.app/viajes/obtener"
 
 
 const vsEliminar = "https://backend-carrito-filb.vercel.app/viajes/eliminar"
-const v = "?"
+
 const inputVentas = document.getElementById("buscadorVentas")
 const contenedorVentas = document.querySelector(".contenedorVentas")
 
@@ -47,9 +47,9 @@ const resultado = document.getElementById("resultadoCarga")
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  if (sessionStorage.getItem("logueado") !== "true") {
-    window.location.href = "login.html"
-  }
+  ///if (sessionStorage.getItem("logueado") !== "true") {
+    ///window.location.href = "login.html"
+  ///}
 
   try {
     const res1 = await fetch(urlVentas)
@@ -344,6 +344,79 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    function verVentasClientes(dic, url, cont){
+      fetch(url, {
+
+        method: 'POST',
+        body: JSON.stringify(dic),
+        headers: {
+          'Content-Type': 'application/json'}
+
+      })
+      .then(response => response.json())
+      .then( data =>  {
+        ////Si no tiene ventas me devuelve []
+        cont.innerHTML = ""
+
+        cont.innerHTML = `
+          <h4 class="clientesVenth3">Compras del cliente</h4>
+        `
+        console.log(data)
+        ///alert(data.mensaje || JSON.stringify(data))
+        const ventasC = data.flat()
+        
+        if (data.length > 0){
+            console.log("Tiene ventas")
+           
+
+            ventasC.forEach(i =>{
+              const divexc = document.createElement("div")
+              divexc.innerHTML = `
+              
+                        <p class="p_excursion">ID: ${i["Id Venta"]}</p>
+                        <p class="p_excursion">Fecha: ${i["Fecha"]}</p>
+                        <p class="p_excursion">Hora: ${i["Hora"]}</p>
+                        <p class="p_excursion">Medio de pago: ${i["Medio de pago"]}</p>
+                        <p class="p_excursion">Cuotas: ${i["Cuotas"] ? "Sí" : "No"}</p>
+                        <p class="p_excursion">Cantidad: ${i["Cantidad"]}</p>
+                        <p class="p_excursion">Código de viaje: ${i["Codigo de viaje"]}</p>
+                        <p class="p_excursion">Tipo: ${i["Tipo"]}</p>
+                        <p class="p_excursion">Precio: $${i["Precio"]}</p>
+              
+              
+              `
+
+              cont.appendChild(divexc)
+
+
+            })
+        }
+
+        else {
+
+          const divexc = document.createElement("div")
+          divexc.innerHTML = `
+          
+          <p class="p_excursiones">Este cliente no tiene compras asociadas</p>
+          
+          `
+          cont.appendChild(divexc)
+
+        }
+        
+
+    })
+    .catch(error => {
+
+      console.error("Ha ocurrido un error:", error)
+      alert(error)
+
+    })
+
+    }
+
+  
+
 
     function vincularAuto(id, autos, vent){
      console.log("hola")
@@ -467,6 +540,37 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Email: ${i["Email"]}</p>
           
         `
+
+        //////////////TRABAJO ACAAAAAAAAAAAAAAAAAAAAAAA
+
+        const btnVerVentas = document.createElement("button")
+        btnVerVentas.classList.add("clientesVentasbtn")
+        btnVerVentas.textContent = "Ver ventas asociadas"
+        btnVerVentas.dataset.id = i["Usuario id"]
+        const contVentas = document.createElement("div")
+        contVentas.classList.add("excursionesDiv")
+        contVentas.style.display = "none"
+
+        div.appendChild(btnVerVentas)
+        div.appendChild(contVentas)
+
+        
+
+        btnVerVentas.addEventListener("click", ()=>{
+          const id = parseInt(btnVerVentas.dataset.id)
+          dic = {
+            "uc_id": id
+          }
+          contVentas.style.display = "block"
+          verVentasClientes(dic, "https://backend-carrito-filb.vercel.app/ventas/obtenerUsuario", contVentas)
+
+
+        })
+
+       
+
+       
+
         const btnEliminar = document.createElement("button")
         btnEliminar.classList.add("eliminarCliente", "eliminar")
         btnEliminar.textContent = "Eliminar registro"
@@ -521,7 +625,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         verExcursiones.dataset.id = i["Codigo"]
 
         const excursionesDiv = document.createElement("div")
-        
+        div.appendChild(verExcursiones)
         div.appendChild(excursionesDiv)
 
 
@@ -602,7 +706,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        
         div.appendChild(agregarAutosPVbtn)
         div.appendChild(agregarExc)
-        div.appendChild(verExcursiones)
+        
         div.appendChild(btnEliminar)
         contenedorPV.appendChild(div)
 

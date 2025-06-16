@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         "usuarioIngresado": user,
         "contraseñaIngresada": password
+
       }
 
 
