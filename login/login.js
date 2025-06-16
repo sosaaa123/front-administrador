@@ -11,12 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = passwordInput.value
 
     dic = {
-      
-        "usuario":user,
-        "contraseña":password
 
+        "usuarioIngresado": user,
+        "contraseñaIngresada": password
+      }
 
-    }
 
     fetch(url,{
 
@@ -27,8 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
     .then(response => response.json())
-    .then(data=> {
-      console.log(data)
+    .then(data => {
+        if (data === true) {
+
+          sessionStorage.setItem("logueado", "true")
+          window.location.href = "../panel/panel_de_control.html"
+          
+      } else {
+        alert("Credenciales incorrectas")
+      }
     })
     .catch(error => {
 
