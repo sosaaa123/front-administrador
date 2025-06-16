@@ -7,6 +7,27 @@ const urlVS = "https://backend-carrito-filb.vercel.app/viajes/obtener"
 ////const urlExc = "https://backend-carrito-filb.vercel.app/excursiones/obtener" EXCURSIONES TODAVIA NO ESTA SUBIDA
 
 
+const excursionesPrueba = [
+  {
+    "Excursion id": 1,
+    "Nombre": "Excursion A",
+    "Inicio": "09:00",
+    "Final": "13:00",
+    "Descripcion": "Descripcion A",
+    "Lugar": "Lugar A"
+  },
+  {
+    "Excursion id": 2,
+    "Nombre": "Excursion B",
+    "Inicio": "14:00",
+    "Final": "18:00",
+    "Descripcion": "Descripcion B",
+    "Lugar": "Lugar B"
+  }
+]
+
+
+
 const vsEliminar = "https://backend-carrito-filb.vercel.app/viajes/eliminar"
 
 const inputVentas = document.getElementById("buscadorVentas")
@@ -130,7 +151,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <h4 class="excursionesh3">Excursiones</h4>
         `
         console.log(data)
-        alert(data.mensaje || JSON.stringify(data))
+        ///alert(data.mensaje || JSON.stringify(data))
         excursiones = data.flat()
         
         if (data.length > 0){
@@ -183,9 +204,82 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    function vincularExc(){
-      const vent = window.open("agregarExc/agregarEx.html", "excursiones", "width=700,height=600,top=100,left=200,resizable=yes,scrollbars=yes")
+    vent = document.querySelector(".ventanAgregar")
+    function vincularExc(id, excursiones, vent){
+     console.log("hola")
+     vent.innerHTML = ""
+     vent.style.display = "block"
+     x = document.createElement("button")
+     x.textContent = "X"
+     x.classList.add("ventanaCerrar")
+     vent.appendChild(x)
+    x.addEventListener("click", ()=>{
+      vent.style.display = "none"
+    })
+
+    excursiones.forEach(i =>{
+        const div = document.createElement("div")
+        div.classList.add("info")
+
+        div.innerHTML = 
+        `
+          <p>Excursion id: ${i["Excursion id"]}</p>
+          <p>Nombre: ${i["Nombre"]}</p>
+          <p>Inicio: ${i["Inicio"]}</p>
+          <p>Final: ${i["Final"]}</p>
+          <p>Descripcion: ${i["Descripcion"]}</p>
+          <p>Lugar: ${i["Lugar"]}</p>
+          
+
+        `
+        const agregar = document.createElement("button")
+        agregar.textContent = "agregar"
+        agregar.dataset.id = i["Excursion id"]
+
+        agregar.addEventListener("click", () =>{
+          excId = parseInt(agregar.dataset.id)
+          const dicVinc = {
+            "pv_id": id,
+            "exc_id":excId
+          }
+
+          fetch("https://backend-carrito-filb.vercel.app/excursiones/ingresarVinculoPV",{
+
+                method: 'POST',
+                body: JSON.stringify(dicVinc),
+                headers: {
+                'Content-Type': 'application/json'
+              }
+          })
+          .then(response => response.json())
+          .then( data =>  {
+
+                console.log(data)
+                ///alert(data.mensaje || JSON.stringify(data))
+                alert("Excursion agregada")
+
+          })
+          .catch(error => {
+
+                console.error("Ha ocurrido un error:", error)
+        
+
+          })
+
+        })
+        
+
+        div.appendChild(agregar)
+        vent.appendChild(div)
+
+
+      })
+
+
+
     }
+
+
 
     function mostrarVentas(ventas) {
       contenedorVentas.innerHTML = ""
@@ -292,20 +386,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         div.appendChild(excursionesDiv)
 
 
-      ////////////////  ACA ESTO Y TRABAJANDO ///////
+      ////////////////  ACA ESTOY TRABAJANDO ///////
 
         const agregarExc = document.createElement("button")
         agregarExc.classList.add("agregarExc")
-        agregarExc.textContent = "Agregar excursion"
+        agregarExc.textContent = "Agregar Excursion"
         agregarExc.dataset.id = i["Codigo"]
-
-        div.appendChild(agregarExc)
-
-
-        agregarExc.addEventListener("click", ()=>{
-          vincularExc()
-        })
         
+        agregarExc.addEventListener("click", ()=>{
+          id = parseInt(agregarExc.dataset.id)
+          vincularExc(id, ventas, vent)
+          console.log("hola")
+        })
+
         
         const btnEliminar = document.createElement("button")
         btnEliminar.classList.add("eliminarPV", "eliminar")
@@ -330,7 +423,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           borrarRegistro("https://backend-carrito-filb.vercel.app/paqueteDeViajes/eliminar", dicId)
           
         })
+
+       
       
+        div.appendChild(agregarExc)
         div.appendChild(verExcursiones)
         div.appendChild(btnEliminar)
         contenedorPV.appendChild(div)
@@ -551,6 +647,8 @@ function enviarForm(dic, url) {
       console.error("Horror:", error)
     })
 }
+
+
 
 
 formularioPV.addEventListener("submit", function(event) {
