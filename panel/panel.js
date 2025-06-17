@@ -1,6 +1,7 @@
 
 
 const urlVentas = "https://backend-carrito-filb.vercel.app/ventas/obtener"
+///ttps://backend-carrito-filb.vercel.app/ventas/obtener
 const urlClientes = "https://backend-carrito-filb.vercel.app/clientes/obtener"
 const urlPV = "https://backend-carrito-filb.vercel.app/paqueteDeViajes/obtener"
 const urlVS = "https://backend-carrito-filb.vercel.app/viajes/obtener"
@@ -71,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res6 = await fetch(urlExc)
     const data6 = await res6.json()
 
-    const ventas = data1.flat()
+    const ventas = data1.flat() //////777ACAAACAAAAAAAAAAAAAAAAAA 13:09
     ventas.reverse() ///Para sacar los diccionarios de la lista en la que estan y ahorrarme recorrerlos
     console.log(ventas)
 
@@ -967,7 +968,7 @@ function enviarForm(dic, url) {
     })
     .then(response => response.json())
     .then(data => {
-          alert(data.Mensaje)
+          alert("Registro agregado exitosamente")
           location.reload()
           console.log(data.Mensaje)
 
