@@ -71,22 +71,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res6 = await fetch(urlExc)
     const data6 = await res6.json()
 
-    const ventas = data1.flat() ///Para sacar los diccionarios de la lista en la que estan y ahorrarme recorrerlos
+    const ventas = data1.flat()
+    ventas.reverse() ///Para sacar los diccionarios de la lista en la que estan y ahorrarme recorrerlos
     console.log(ventas)
 
     const clientes = data2.flat()
+    clientes.reverse()
     console.log(clientes)
 
     const PVs = data3.flat()
+    PVs.reverse()
     console.log(PVs)
 
     const VSs = data4.flat()
+    VSs.reverse()
     console.log(VSs)
 
     const autosJSON = data5.flat()
+    autosJSON.reverse()
     console.log(autosJSON)
 
     const excursionesJSON = data6.flat()
+    excursionesJSON.reverse()
     console.log(excursiones)
 
   function borrarRegistro(url, dicID){
@@ -102,12 +108,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     .then(response => response.json())
     .then( data =>  {
       console.log(data)
-      if (data.error ||  (data.detail && data.detail.includes('violates foreign key constraint'))) {
+      if (data.error ||  (data.detail && data.detail.includes("violates foreign key constraint"))) {
           console.log(data)
           alert("no se puede eliminar el registro porque tiene una relacion importante con otro registro, consultar demas tablas.")
-        
+          
       } else {
-        alert("Registro eliminado exitosamente.");
+        alert("Registro eliminado exitosamente.")
+        location.reload()
       }
         
 

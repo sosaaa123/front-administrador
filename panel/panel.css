@@ -226,7 +226,10 @@ input, textarea, select, .formIngresar button {
   margin: 2% 0;
 }
 
-
+.info p{
+  margin: 1%;
+  font-weight: bold;
+}
 
 .ventanAgregar {
 
@@ -253,7 +256,8 @@ input, textarea, select, .formIngresar button {
 
 
 .ventanaCerrar {
-  position: absolute;     
+  position: absolute;  
+  position: fixed;   
   top: 10px;
   right: 10px;
   background-color: #bbb;
