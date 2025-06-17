@@ -602,7 +602,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>Origen: ${i["Origen"]}</p>
           <p>Destino: ${i["Destino"]}</p>
           <p>Estadia: ${i["Tipo"]}</p>
-          <p>Destino: ${i["Descripcion"]}</p>
+          <p>Descripcion: ${i["Descripcion"]}</p>
           <p>Cupos: ${i["Cupos"]}</p>
           <p>Duracion: ${i["Duracion"]}</p>
           <p>Tipo de viaje: ${i["Tipo_de_viaje"]}</p>
