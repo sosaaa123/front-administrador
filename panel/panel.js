@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   <p class="p_excursion" >Auto id: ${i["auto id"]}</p>
                   <p class="p_excursion" >Modelo: ${i["modelo"]}</p>
                   <p class="p_excursion" >Disponibles: ${i["disponibles"]}</p>
-                  <p class="p_excursion" >Contraseña: ${i["contraseña"]}</p>
+                 
                   <p class="p_excursion" >Precio por dia: $${i["precio por dia"]}</p>
               
               
