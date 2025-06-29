@@ -290,6 +290,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      vent.appendChild(x)
     x.addEventListener("click", ()=>{
       vent.style.display = "none"
+      location.reload()
     })
 
     excursiones.forEach(i =>{
@@ -439,6 +440,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      vent.appendChild(x)
     x.addEventListener("click", ()=>{
       vent.style.display = "none"
+      location.reload()
     })
 
     autos.forEach(i =>{
